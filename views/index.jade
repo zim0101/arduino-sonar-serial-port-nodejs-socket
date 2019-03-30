@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    script(src='https://cdn.socket.io/socket.io-1.2.0.js')
+    //- script(src="./../resources/js/socket.io.js")
+  body
+    #text
+      h1 Sonar Readings: 
+      p
+    script.
+      var text = document.getElementById('text');
+      var socket = io.connect('http://127.0.0.1:3007');
+      socket.on('data', function(message) {
+      console.log(message.data);
+      text.innerHTML = message.data;
+      });
