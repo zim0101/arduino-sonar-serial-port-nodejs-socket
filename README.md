@@ -1,37 +1,23 @@
-# arduino-sonar-serial-port-nodejs-socket
+#Config and find your port:
 
-first of all, check that port is really giving something:
+--------------------------
+ls /dev/cu.*
+--------------------------
+and then,
+--------------------------
+cat < port name >
+--------------------------
+After giving the port name with the cat command you will get the data from the machine. Any machine which follow serial communication I guess.
 
-----------------
-cat < port >
-----------------
-in linux for arduino the default port is /dev/ttyACM0, 
-   cat /dev/ttyACM0
-
-1. clone the repo:
+# clone this repo and make sure your node version is v10, mine was... and then run:
+---------------------------
+npm install
 ---------------------------
 
-git clone git@github.com:zim0101/arduino-sonar-serial-port-nodejs-socket.git
+#Config port in your application(this application) :
+arduino-sonar-serial-port-nodejs-socket ---> port-config ---> config.js
 
----------------------------
-2. check node version with this command:
----------------------------
-node -v
----------------------------
-
-   
----------------------------
-    node version should be v10.15.3, if not then use:
-    nvm install v10.15.3
----------------------------
-3. npm install
-
-4. Config port and baudrate:
-    a) go to arduino-app ->port-config -> config.js, change port and baudrate as your need.
-
-5. start application with: 
+# Run your app: 
 ---------------------------
 npm start
 ---------------------------
-
-   this will start your app here: "http://localhost:3006"
