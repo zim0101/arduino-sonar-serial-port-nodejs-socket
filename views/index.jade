@@ -32,16 +32,14 @@ html
                 .row
                     .col-md-8(style='padding-left: 100px;')
                         button#start.btn.btn-outline-info Start
-                        button#stop.btn.btn-outline-danger Stop
                         form(id='form')
                             .form-group
                                 label(for='serialport') Serial Port
-                                input#serialport.form-control(type='text', name='port', placeholder='/dev/ttyACM0')
+                                input#serialport.form-control(type='text', name='port', disabled placeholder='/dev/ttyACM0')
                             .form-group
                                 label(for='serialport') Baud rate
-                                input#baudrate.form-control(type='number', name='baudrate', placeholder='9600')
+                                input#baudrate.form-control(type='number', name='baudrate', disabled placeholder='9600')
                             div
-                                input.btn.btn-outline-info(type='submit' id='submit')
                     .col-md-4.display
                         h2#text(style='padding-top: 30px;padding-left: 60px;font-size:80px;', h2='')
         script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
@@ -73,10 +71,6 @@ html
                     socket.emit('start', []);
                 });
 
-                $('#stop').click(function () {
-                    console.log('clicked on stop');
-                    socket.emit('stop', []);
-                    // $("#text").html('');
-                });
+
             });
 
