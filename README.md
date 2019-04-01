@@ -3,7 +3,7 @@
 first of all, check that port is really giving something:
 
 ----------------
-cat <port>
+cat < port >
 ----------------
 in linux for arduino the default port is /dev/ttyACM0, 
    cat /dev/ttyACM0
