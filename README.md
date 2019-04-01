@@ -3,11 +3,13 @@
 
 1. clone the repo:
 ---------------------------
+
 git clone git@github.com:zim0101/arduino-sonar-serial-port-nodejs-socket.git
+
 ---------------------------
 2. check node version with this command:
 ---------------------------
-    node -v
+node -v
 ---------------------------
 
    
