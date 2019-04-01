@@ -14,7 +14,7 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3007');
 app.set('port', port);
-
+app.set('view engine', 'jade');
 /**
  * Create HTTP server.
  */

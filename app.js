@@ -12,9 +12,11 @@ var usersRouter = require('./routes/users');
 
 
 var app = express();
+let hardware = require('./port-config/config');
 var server = app.listen(3006, () => { //Start the server, listening on port 4000.
     console.log("Listening to requests on port 3006...");
-})
+    console.log('Hardware connected on port : ', hardware.config.port);
+});
 
 var io = require('socket.io')(server); //Bind socket.io to our express server.
 
@@ -52,19 +54,38 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const SerialPort = require('serialport'); 
-const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('/dev/ttyACM0'); //Connect serial port to port COM3. Because my Arduino Board is connected on port COM3. See yours on Arduino IDE -> Tools -> Port
-const parser = port.pipe(new Readline({delimiter: '\r\n'})); //Read the line only when new line comes.
-parser.on('data', (data) => { //Read data
-    // console.log(data);
-    // var today = new Date();
-    io.sockets.emit('data', data); //emit the datd i.e. {date, time, temp} to all the connected clients.
-});
-
 io.on('connection', (socket) => {
     console.log("socketConnectionStatus: *********Someone connected*********"); //show a log as a new client connects.
+
+
+
+    socket.on('start', (data) => {
+        console.log("port communication has been started");
+        const SerialPort = require('serialport');
+        const Readline = SerialPort.parsers.Readline;
+        const port = new SerialPort(hardware.config.port); //Connect serial port to port COM3. Because my Arduino Board is connected on port COM3. See yours on Arduino IDE -> Tools -> Port
+        const parser = port.pipe(new Readline({delimiter: '\r\n'})); //Read the line only when new line comes.
+        parser.on('data', (data) => {
+            io.sockets.emit('data', data); //emit the datd i.e. {date, time, temp} to all the connected clients.
+        });
+    });
+
+    socket.on('stop', (data) => {
+        console.log("port communication has been destroyed !!!!");
+        const SerialPort = require('serialport');
+        // const Readline = SerialPort.parsers.Readline;
+        const port = new SerialPort(hardware.config.port);
+        port.close( (err) => {
+            console.log(err);
+        });
+        // const callback = () => {
+        //     console.log("callback!!!!!!!!");
+        // };
+        // io.sockets.removeListener('start', callback);
+    });
 });
+
+
 
 module.exports = app;
 
